@@ -7,7 +7,7 @@ addons:
 
   apt:
     packages:
-	  - libqtwebkit-dev
+      - libqtwebkit-dev
 
 services:
   - postgresql
