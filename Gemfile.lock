@@ -49,7 +49,8 @@ GEM
       tzinfo (~> 1.1)
     acts-as-taggable-on (3.5.0)
       activerecord (>= 3.2, < 5)
-    addressable (2.4.0)
+    addressable (2.5.1)
+      public_suffix (~> 2.0, >= 2.0.2)
     ancestry (2.0.0)
       activerecord (>= 3.0.0)
     ansi (1.5.0)
@@ -68,15 +69,15 @@ GEM
     builder (3.2.3)
     byebug (9.0.5)
     cancancan (1.15.0)
-    capybara (2.7.1)
+    capybara (2.13.0)
       addressable
       mime-types (>= 1.16)
       nokogiri (>= 1.3.3)
       rack (>= 1.0.0)
       rack-test (>= 0.5.4)
       xpath (~> 2.0)
-    capybara-webkit (1.11.1)
-      capybara (>= 2.3.0, < 2.8.0)
+    capybara-webkit (1.14.0)
+      capybara (>= 2.3.0, < 2.14.0)
       json
     childprocess (0.5.9)
       ffi (~> 1.0, >= 1.0.11)
@@ -205,7 +206,7 @@ GEM
       sass (>= 3.2)
     nenv (0.3.0)
     nested_form (0.3.2)
-    nokogiri (1.7.1)
+    nokogiri (1.7.2)
       mini_portile2 (~> 2.1.0)
     notiffany (0.1.0)
       nenv (~> 0.1)
@@ -230,7 +231,8 @@ GEM
       pry (~> 0.10)
     pry-rails (0.3.1)
       pry (>= 0.9.10)
-    rack (1.6.5)
+    public_suffix (2.0.5)
+    rack (1.6.8)
     rack-accept (0.4.5)
       rack (>= 0.4)
     rack-attack (4.3.0)
@@ -396,7 +398,7 @@ GEM
     warden (1.2.6)
       rack (>= 1.0)
     websocket (1.2.3)
-    xpath (2.0.0)
+    xpath (2.1.0)
       nokogiri (~> 1.3)
 
 PLATFORMS
@@ -412,7 +414,7 @@ DEPENDENCIES
   bourbon
   bourne
   cancancan
-  capybara-webkit (~> 1.11.1)
+  capybara-webkit
   coffee-rails
   country_select
   curb
