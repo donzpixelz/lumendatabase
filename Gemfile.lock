@@ -69,15 +69,15 @@ GEM
     builder (3.2.3)
     byebug (9.0.5)
     cancancan (1.15.0)
-    capybara (2.13.0)
+    capybara (2.7.1)
       addressable
       mime-types (>= 1.16)
       nokogiri (>= 1.3.3)
       rack (>= 1.0.0)
       rack-test (>= 0.5.4)
       xpath (~> 2.0)
-    capybara-webkit (1.14.0)
-      capybara (>= 2.3.0, < 2.14.0)
+    capybara-webkit (1.11.1)
+      capybara (>= 2.3.0, < 2.8.0)
       json
     childprocess (0.5.9)
       ffi (~> 1.0, >= 1.0.11)
@@ -414,7 +414,7 @@ DEPENDENCIES
   bourbon
   bourne
   cancancan
-  capybara-webkit
+  capybara-webkit (~> 1.11.1)
   coffee-rails
   country_select
   curb
