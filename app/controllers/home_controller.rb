@@ -10,7 +10,7 @@ class HomeController < ApplicationController
      config.access_token = ENV['TWITTER_OAUTH_TOKEN']
      config.access_token_secret = ENV['TWITTER_OAUTH_TOKEN_SECRET']
     end
-    
+
     if !fragment_exist?( 'chillingeffects-tweets' )
       begin
         @twitter_user = "lumendatabase"
