@@ -192,6 +192,7 @@ describe 'notices/show.html.erb' do
     notice.save
 
     assign(:notice, notice)
+    allow(controller).to receive(:current_user).and_return(User.new)
 
     render
 

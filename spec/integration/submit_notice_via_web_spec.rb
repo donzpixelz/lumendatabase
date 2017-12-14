@@ -198,12 +198,9 @@ feature "notice submission" do
     open_recent_notice
 
     within('#works') do
-      expect(page).to have_content 'http://www.example.com/original_work.pdf'
+      expect(page).to have_content 'example.com - 1 URL'
       expect(page).to have_content 'movie'
       expect(page).to have_content 'A series of videos and still images'
-      expect(page).to have_css(
-        %{.infringing_url:contains("http://example.com/infringing_url1")}
-      )
     end
   end
 

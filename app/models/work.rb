@@ -1,4 +1,5 @@
 require 'validates_automatically'
+require 'uri/http'
 
 class Work < ActiveRecord::Base
   include ValidatesAutomatically
@@ -50,6 +51,39 @@ class Work < ActiveRecord::Base
 
   def self.find_or_create!(attributes)
     where(attributes).first || create!(attributes)
+  end
+
+  def infringing_urls_counted_by_domain
+    count_by_domain(infringing_urls)
+  end
+
+  def copyrighted_urls_counted_by_domain
+    count_by_domain(copyrighted_urls)
+  end
+
+  def count_by_domain(urls)
+    counted_urls = {}
+
+    urls.each do |url|
+      uri = URI.parse(url.url)
+
+      # get just domain
+      domain = uri.host
+
+      if counted_urls[domain].nil?
+        counted_urls[domain] = {
+          domain: domain,
+          count: 1
+        }
+      else
+        counted_urls[domain][:count] += 1
+      end
+    end
+
+    counted_urls
+      .values
+      .sort_by! { |url| url[:count] }
+      .reverse!
   end
 
 # Code below is to run a basic classifier for work kinds. Disabled due to confusion caused by mis-classified works.
