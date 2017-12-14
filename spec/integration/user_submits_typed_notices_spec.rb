@@ -1,6 +1,9 @@
 require 'rails_helper'
+require 'support/user_helpers'
 
 feature "typed notice submissions" do
+  include UserHelpers
+
   scenario "User submits and views a Trademark notice" do
     submission = NoticeSubmissionOnPage.new(Trademark)
     submission.open_submission_form
@@ -64,6 +67,17 @@ feature "typed notice submissions" do
       expect(page).to have_content('example.com - 1 URL')
     end
 
+    login
+
+    within('#recent-notices li:nth-child(1)') { find('a').click }
+
+    expect(page).to have_content("Defamation notice to Recipient")
+
+    within("#works") do
+      expect(page).to have_content('URLs of Allegedly Defamatory Material')
+      expect(page).to have_content('http://example.com/defamatory_url1')
+    end
+
     within('.notice-body') do
       expect(page).to have_content('Legal Complaint')
       expect(page).to have_content('They impuned upon my good character')
@@ -93,6 +107,14 @@ feature "typed notice submissions" do
       expect(page).to have_content('Location of Some of the Material Requested for Removal')
       expect(page).to have_content('example.com - 1 URL')
     end
+
+    login
+
+    within('#recent-notices li:nth-child(1)') { find('a').click }
+
+    within("#works") do
+      expect(page).to have_content('http://example.com/defamatory_url1')
+    end
   end
 
   scenario "User submits and views a CourtOrder notice" do
@@ -119,15 +141,23 @@ feature "typed notice submissions" do
 
     expect(page).to have_content("Court Order notice to Recipient")
 
+    within('.notice-body') do
+      expect(page).to have_content('Explanation of Court Order')
+      expect(page).to have_content("I guess they don't like me")
+      expect(page).to have_content('USC foo bar 21')
+    end
+
     within("#works") do
       expect(page).to have_content('Targeted URLs')
       expect(page).to have_content('example.com - 1 URL')
     end
 
-    within('.notice-body') do
-      expect(page).to have_content('Explanation of Court Order')
-      expect(page).to have_content("I guess they don't like me")
-      expect(page).to have_content('USC foo bar 21')
+    login
+
+    within('#recent-notices li:nth-child(1)') { find('a').click }
+
+    within("#works") do
+      expect(page).to have_content('http://example.com/targeted_url')
     end
   end
 
@@ -162,14 +192,6 @@ feature "typed notice submissions" do
 
     expect(page).to have_content("Law Enforcement Request notice to Recipient")
 
-    within("#works") do
-      expect(page).to have_content('URLs mentioned in request')
-      expect(page).to have_content('example.com - 1 URL')
-      expect(page).to have_content('URLs of original work')
-      expect(page).to have_content('example2.com - 1 URL')
-      expect(page).to have_content("My Tiny Tim fansite")
-    end
-
     within('.notice-body') do
       expect(page).to have_content('Explanation of Request')
       expect(page).to have_content("I don't get it. He made sick music.")
@@ -179,6 +201,23 @@ feature "typed notice submissions" do
 
     within('#entities') do
       expect(page).to have_content('Principal Issuing Authority')
+    end
+
+    within("#works") do
+      expect(page).to have_content('URLs mentioned in request')
+      expect(page).to have_content('example.com - 1 URL')
+      expect(page).to have_content('URLs of original work')
+      expect(page).to have_content('example2.com - 1 URL')
+      expect(page).to have_content("My Tiny Tim fansite")
+    end
+
+    login
+
+    within('#recent-notices li:nth-child(1)') { find('a').click }
+
+    within("#works") do
+      expect(page).to have_content('http://example2.com/offending_url1')
+      expect(page).to have_content('http://example.com/original_object1')
     end
   end
 
@@ -206,6 +245,11 @@ feature "typed notice submissions" do
 
     expect(page).to have_content("Private Information notice to Recipient")
 
+    within('.notice-body') do
+      expect(page).to have_content('Explanation of complaint')
+      expect(page).to have_content('I am in witness protection')
+    end
+
     within("#works") do
       expect(page).to have_content('URLs with private information')
       expect(page).to have_content('example.com - 1 URL')
@@ -213,9 +257,12 @@ feature "typed notice submissions" do
       expect(page).to have_content('These URLs disclose my existence')
     end
 
-    within('.notice-body') do
-      expect(page).to have_content('Explanation of complaint')
-      expect(page).to have_content('I am in witness protection')
+    login
+
+    within('#recent-notices li:nth-child(1)') { find('a').click }
+
+    within("#works") do
+      expect(page).to have_content('http://example.com/offending_url1')
     end
   end
 
@@ -244,6 +291,11 @@ feature "typed notice submissions" do
 
     expect(page).to have_content("Other notice to Recipient")
 
+    within('.notice-body') do
+      expect(page).to have_content('Explanation of complaint')
+      expect(page).to have_content('I am complaining')
+    end
+
     within("#works") do
       expect(page).to have_content('Problematic URLs')
       expect(page).to have_content('example.com - 1 URL')
@@ -252,9 +304,13 @@ feature "typed notice submissions" do
       expect(page).to have_content('These URLs are a serious problem')
     end
 
-    within('.notice-body') do
-      expect(page).to have_content('Explanation of complaint')
-      expect(page).to have_content('I am complaining')
+    login
+
+    within('#recent-notices li:nth-child(1)') { find('a').click }
+
+    within("#works") do
+      expect(page).to have_content('http://example2.com/offending_url1')
+      expect(page).to have_content('http://example.com/original_object1')
     end
   end
 
@@ -270,5 +326,4 @@ feature "typed notice submissions" do
       expect(page).to have_select('Sender Type', selected: 'individual')
     end
   end
-
 end

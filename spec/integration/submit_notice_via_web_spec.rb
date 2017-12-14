@@ -1,11 +1,14 @@
 require 'rails_helper'
 require 'support/notice_actions'
+require 'support/user_helpers'
 
 RSpec.configure do |config|
   config.include NoticeActions
 end
 
 feature "notice submission" do
+  include UserHelpers
+
   scenario "submitting a notice with title" do
     submit_recent_notice("A title")
 
@@ -201,6 +204,19 @@ feature "notice submission" do
       expect(page).to have_content 'example.com - 1 URL'
       expect(page).to have_content 'movie'
       expect(page).to have_content 'A series of videos and still images'
+    end
+
+    login
+
+    open_recent_notice
+
+    within('#works') do
+      expect(page).to have_content 'http://www.example.com/original_work.pdf'
+      expect(page).to have_content 'movie'
+      expect(page).to have_content 'A series of videos and still images'
+      expect(page).to have_css(
+        %{.infringing_url:contains("http://example.com/infringing_url1")}
+      )
     end
   end
 
